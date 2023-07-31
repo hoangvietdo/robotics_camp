@@ -37,17 +37,22 @@ class RobotController(Node):
         else:
             pass
 
-        x_d = -a * b * math.sin(b * self.t)
-        y_d = a * b * math.cos(b * self.t)
-        x_dd = -a * b * b * math.cos(b * self.t)
-        y_dd = -a * b * b * math.sin(b * self.t)
-        msg.linear.x = math.sqrt(math.pow(x_d, 2) + math.pow(y_d, 2))
-        msg.angular.z = (y_dd * x_d - y_d * x_dd) / msg.linear.x
-        self.t = self.t + 0.05
-        self.cmd_vel_pub_.publish(msg)
-        msg.linear.x = 0.0
-        msg.angular.z = 0.0
-        self.cmd_vel_pub_.publish(msg)
+        ## TODO
+        ## - Add keyboard to control (press s) or stop the robot (press 'Space')
+
+        if self.t >= 5.0:
+            x_d = -a * b * math.sin(b * self.t)
+            y_d = a * b * math.cos(b * self.t)
+            x_dd = -a * b * b * math.cos(b * self.t)
+            y_dd = -a * b * b * math.sin(b * self.t)
+            msg.linear.x = math.sqrt(math.pow(x_d, 2) + math.pow(y_d, 2))
+            msg.angular.z = (y_dd * x_d - y_d * x_dd) / msg.linear.x
+            self.t = self.t + 0.05
+            self.cmd_vel_pub_.publish(msg)
+        else:
+            msg.linear.x = 0.0
+            msg.angular.z = 0.0
+            self.cmd_vel_pub_.publish(msg)
 
 def main():
     rclpy.init()
