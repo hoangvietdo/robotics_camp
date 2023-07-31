@@ -47,12 +47,13 @@ class RobotController(Node):
             y_dd = -a * b * b * math.sin(b * self.t)
             msg.linear.x = math.sqrt(math.pow(x_d, 2) + math.pow(y_d, 2))
             msg.angular.z = (y_dd * x_d - y_d * x_dd) / msg.linear.x
-            self.t = self.t + 0.05
             self.cmd_vel_pub_.publish(msg)
+            self.t = self.t + 0.05
         else:
             msg.linear.x = 0.0
             msg.angular.z = 0.0
             self.cmd_vel_pub_.publish(msg)
+            self.t = self.t + 0.05
 
 def main():
     rclpy.init()
