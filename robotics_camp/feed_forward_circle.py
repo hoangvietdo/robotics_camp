@@ -45,8 +45,8 @@ class RobotController(Node):
             y_d = a * b * math.cos(b * self.t)
             x_dd = -a * b * b * math.cos(b * self.t)
             y_dd = -a * b * b * math.sin(b * self.t)
-            msg.linear.x = math.sqrt(math.pow(x_d, 2) + math.pow(y_d, 2))
-            msg.angular.z = (y_dd * x_d - y_d * x_dd) / msg.linear.x
+            msg.linear.x = math.sqrt(math.pow(x_d, 2.0) + math.pow(y_d, 2.0))
+            msg.angular.z = (y_dd * x_d - y_d * x_dd) / pow(msg.linear.x, 2.0)
             self.cmd_vel_pub_.publish(msg)
             self.t = self.t + 0.05
         else:
